@@ -1,5 +1,4 @@
-// TODO: Add documentation
-
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:recase/recase.dart';
@@ -9,10 +8,11 @@ import 'bytestuff.dart';
 const int _headerLength = 10;
 const int _padding = 128;
 
-// Tag type
+/// Tag type, self explanatory
 enum TagType { title, artist, genre, album, year, artwork, track, duration }
 
 extension _TagTypeExt on TagType {
+  /// Returns the binary code of each tag type, which will be written to the file
   Uint8List get code {
     switch (this) {
       case TagType.title:
@@ -35,7 +35,7 @@ extension _TagTypeExt on TagType {
   }
 }
 
-TagType? tagTypeFromString(String type) {
+TagType? _tagTypeFromString(String type) {
   switch (type) {
     case "title":
       return TagType.title;
@@ -57,6 +57,7 @@ TagType? tagTypeFromString(String type) {
   return null;
 }
 
+/// List of tags. Does not allow for multiple tags with the same type
 class TagList extends Iterable {
   final _list = <Tag>[];
   TagList();
@@ -68,6 +69,8 @@ class TagList extends Iterable {
     return false;
   }
 
+  /// Transfers a list of tags to a TagList object.
+  /// All this will do is remove all tags with the same [type].
   static TagList fromList(List<Tag> tags) {
     final list = TagList();
     for (final frame in tags) {
@@ -76,10 +79,13 @@ class TagList extends Iterable {
     return list;
   }
 
-  static TagList fromMap(Map<String, dynamic> tags) {
+  /// Transfers a map of tags to a TagList object.
+  /// It will read for keys `"title"`, `"artist"` and so on and add them to the list
+  /// as [Tag]s
+  static TagList fromMap(Map<String, String> tags) {
     final list = TagList();
     for (final frame in tags.entries) {
-      TagType? type = tagTypeFromString(frame.key);
+      TagType? type = _tagTypeFromString(frame.key);
       if (type == null) continue;
       list.add(Tag(type, frame.value));
     }
@@ -100,12 +106,19 @@ class TagList extends Iterable {
   Iterator get iterator => _list.iterator;
 }
 
+/// Represents an ID3v2 tag, the class you will be using the most with this library.
+/// [type] represents a tag type, and [data] represents the tag's data.
+/// A tag of type [TagType.artwork] has data which represents a URL to an image
+/// A tag of type [TagType.duration] has data which represents the track's duration in milliseconds
+/// The other tags are represented by strings which will get encoded into ISO 8859-1/Latin-1.
+///
+/// Examples of frames are (title, Numb), (genre, Alternative Rock), or (artwork, <link to image>)
 class Tag {
   final TagType type;
-  dynamic data;
+  String data;
   Tag(this.type, this.data);
 
-  Uint8List makeFrame(Uint8List code, List<int> data) {
+  Uint8List _makeFrame(Uint8List code, List<int> data) {
     int length = data.length;
     final binary = Uint8List(4 + 4 + 2 + length); // header size + data size
     binary.setAll(0, code); // 4 bytes
@@ -116,21 +129,25 @@ class Tag {
     return binary;
   }
 
-  Uint8List get textFrame => makeFrame(type.code, [0x00] + latin1.encode(data));
+  Uint8List _textFrame(String data) =>
+      _makeFrame(type.code, [0x00] + latin1.encode(data));
 
-  Uint8List get picFrame {
+  Uint8List _picFrame(Image image) {
     final descriptionBin = latin1.encode("Artwork");
     final bin = Uint8List.fromList([0x00] + // uses ISO-8859 encoding
-        latin1.encode(data.mimetype) +
+        latin1.encode(image.mimetype) +
         [0x00] +
         [0x03] + // cover (front)
         descriptionBin +
         [0x00] +
-        data.binary);
-    return makeFrame(type.code, bin);
+        image.binary);
+    return _makeFrame(type.code, bin);
   }
 
-  Future<Uint8List?> get frame async {
+  /// Returns the binary representation of a frame.
+  ///
+  /// You probably shouldn't be using this as an end user, but it's an option.
+  Future<Uint8List> get frame async {
     switch (type) {
       case TagType.title:
       case TagType.artist:
@@ -138,21 +155,24 @@ class Tag {
       case TagType.year:
       case TagType.track:
       case TagType.duration:
-        return textFrame;
+        return _textFrame(data);
       case TagType.genre:
-        if (data != null) {
-          data = ReCase(data).titleCase.toString();
-          return textFrame;
-        }
-        break;
+        return _textFrame(ReCase(data).titleCase.toString());
       case TagType.artwork:
-        data = await downloadImage(data);
-        return picFrame;
+        return _picFrame(await downloadImage(data));
     }
-    return null;
   }
 }
 
+/// Returns the complete binary representation of an ID3v2 tag. This should be
+/// written in the first bytes of an audio file. An example of tagging an MP3 file is:
+///
+/// ```dart
+/// final mp3content = File("music.mp3").readAsBytesSync();
+/// final tagsBinary = await makeId3v2(tags);
+/// final taggedFile = File("taggedMusic.mp3");
+/// taggedFile.writeAsBytesSync(tagsBinary + mp3content);
+/// ```
 Future<Uint8List> makeId3v2(TagList tags) async {
   if (tags.isEmpty) return Uint8List(0);
   List<int> id3list = [];
@@ -179,4 +199,10 @@ Future<Uint8List> makeId3v2(TagList tags) async {
   id3.setRange(6, 10, Uint28.fromInt(tagLen).bytes);
 
   return id3;
+}
+
+Future<void> addTagsToFile(TagList tags, String filename) async {
+  final tagsBinary = await makeId3v2(tags);
+  final mp3contents = File(filename).readAsBytesSync();
+  File(filename).writeAsBytesSync(tagsBinary + mp3contents);
 }

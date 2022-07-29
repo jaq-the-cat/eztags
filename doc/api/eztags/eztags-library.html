@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="eztags library API docs, for the Dart programming language.">
+  <title>eztags library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">eztags</a></li>
+    <li class="self-crumb">eztags library</li>
+  </ol>
+  <div class="self-name">eztags</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-library">eztags</span> library 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+ 
+</h1></div>
+
+    
+
+
+    <section class="summary offset-anchor" id="classes">
+      <h2>Classes</h2>
+
+      <dl>
+        <dt id="Tag">
+  <span class="name "><a href="../eztags/Tag-class.html">Tag</a></span> 
+
+</dt>
+<dd>
+  Represents an ID3v2 tag, the class you will be using the most with this library.
+<a href="../eztags/Tag/type.html">type</a> represents a tag type, and <a href="../eztags/Tag/data.html">data</a> represents the tag's data.
+A tag of type <a href="../eztags/TagType.html">TagType.artwork</a> has data which represents a URL to an image
+A tag of type <a href="../eztags/TagType.html">TagType.duration</a> has data which represents the track's duration in milliseconds
+The other tags are represented by strings which will get encoded into ISO 8859-1/Latin-1.
+</dd>
+
+        <dt id="TagList">
+  <span class="name "><a href="../eztags/TagList-class.html">TagList</a></span> 
+
+</dt>
+<dd>
+  List of tags. Does not allow for multiple tags with the same type
+</dd>
+
+      </dl>
+    </section>
+
+
+
+
+
+    <section class="summary offset-anchor" id="functions">
+      <h2>Functions</h2>
+
+      <dl class="callables">
+        <dt id="makeId3v2" class="callable">
+  <span class="name"><a href="../eztags/makeId3v2.html">makeId3v2</a></span><span class="signature">(<wbr><span class="parameter" id="makeId3v2-param-tags"><span class="type-annotation"><a href="../eztags/TagList-class.html">TagList</a></span> <span class="parameter-name">tags</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns the complete binary representation of an ID3v2 tag. This should be
+written in the first bytes of an audio file. An example of tagging an MP3 file is:
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="enums">
+      <h2>Enums</h2>
+
+      <dl>
+        <dt id="TagType">
+  <span class="name "><a href="../eztags/TagType.html">TagType</a></span> 
+
+</dt>
+<dd>
+  Tag type, self explanatory
+</dd>
+
+      </dl>
+    </section>
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">eztags</a></li>
+  <li class="self-crumb">eztags library</li>
+</ol>
+
+
+    <h5><span class="package-name">eztags</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="../eztags/eztags-library.html">eztags</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>eztags library</h5>
+    <ol>
+  <li class="section-title"><a href="../eztags/eztags-library.html#classes">Classes</a></li>
+  <li><a href="../eztags/Tag-class.html">Tag</a></li>
+  <li><a href="../eztags/TagList-class.html">TagList</a></li>
+
+
+
+
+
+  <li class="section-title"><a href="../eztags/eztags-library.html#functions">Functions</a></li>
+  <li><a href="../eztags/makeId3v2.html">makeId3v2</a></li>
+
+  <li class="section-title"><a href="../eztags/eztags-library.html#enums">Enums</a></li>
+  <li><a href="../eztags/TagType.html">TagType</a></li>
+
+
+</ol>
+
+  </div><!--/sidebar-offcanvas-right-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    eztags
+      1.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
