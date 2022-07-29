@@ -111,7 +111,6 @@ class TagList extends Iterable {
 /// A tag of type [TagType.artwork] has data which represents a URL to an image
 /// A tag of type [TagType.duration] has data which represents the track's duration in milliseconds
 /// The other tags are represented by strings which will get encoded into ISO 8859-1/Latin-1.
-///
 /// Examples of frames are (title, Numb), (genre, Alternative Rock), or (artwork, <link to image>)
 class Tag {
   final TagType type;
