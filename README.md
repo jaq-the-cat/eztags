@@ -24,7 +24,7 @@ final tags = {
   "genre": "Alternative Rock",
   "artwork": "https://i.discogs.com/2k0D3eVBULh37nXGG1T6shlOcuxrwCc8tJ7kWpM3was/rs:fit/g:sm/q:90/h:530/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUwMDU3/NzEtMTQyNDc4MzQ3/NS0yNTkyLmpwZWc.jpeg",
   "year": "2006"
-}
+};
 
 // Get the binary tags
 Uint8List binary = await makeId3v2(TagList.fromMap(tags));

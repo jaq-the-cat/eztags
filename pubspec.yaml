@@ -1,6 +1,6 @@
 name: eztags
 description: Simple pure-dart package to write ID3 tags to any type of file
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/jaq-the-cat/eztags
 
 environment:
