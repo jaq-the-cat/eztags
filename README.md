@@ -26,6 +26,16 @@ final tags = {
   "year": "2006"
 }
 
+// Get the binary tags
+Uint8List binary = await makeId3v2(TagList.fromMap(tags));
+
+// or
+
+makeId3v2(TagList.fromMap(tags)).then((binary) {
+  ...
+});
+
+
 // Add them to the file
 addTagsToFile(TagList.fromMap(tags), 'file.mp3');
 ```

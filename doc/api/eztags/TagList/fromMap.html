@@ -53,7 +53,7 @@
       
 
 <span class="returntype"><a href="../../eztags/TagList-class.html">TagList</a></span>
-<span class="name ">fromMap</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromMap-param-tags"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">tags</span></span></li>
+<span class="name ">fromMap</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromMap-param-tags"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">tags</span></span></li>
 </ol>)
 
       
@@ -63,14 +63,14 @@
 <section class="desc markdown">
   <p>Transfers a map of tags to a TagList object.
 It will read for keys <code>"title"</code>, <code>"artist"</code> and so on and add them to the list
-as <a href="../../eztags/Tag-class.html">Tag</a>s.</p>
+as <a href="../../eztags/Tag-class.html">Tag</a>s</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static TagList fromMap(Map&lt;String, dynamic&gt; tags) {
+  <pre class="language-dart"><code class="language-dart">static TagList fromMap(Map&lt;String, String&gt; tags) {
   final list = TagList();
   for (final frame in tags.entries) {
     TagType? type = _tagTypeFromString(frame.key);

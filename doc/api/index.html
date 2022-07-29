@@ -44,34 +44,37 @@
   <div id="dartdoc-main-content" class="main-content">
       
 <section class="desc markdown">
-  <!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-<p>TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.</p>
+  <p>Pure-Dart package that takes in tags and outputs the full binary version as a
+complete ID3v2.3 tag, or puts them in a file directly.</p>
 <h2 id="features">Features</h2>
-<p>TODO: List what your package can do. Maybe include images, gifs, or videos.</p>
+<p>This package is simple and easy to use, and can easily be used to add a number
+of ID3 tags to any type of file.</p>
 <h2 id="getting-started">Getting started</h2>
-<p>TODO: List prerequisites and provide or point to information on how to
-start using the package.</p>
+<p>To get started, make a <code>List</code> or <code>Map</code> of tags and convert them into a <code>TagList</code>
+with <code>TagList.fromList()</code> or <code>TagList.fromMap()</code>.</p>
+<p>Then you can simply use the <code>makeId3v2</code> function to convert all that information
+into the ID3v2 binary format, or skip that step and add the tags to a file
+immediately with <code>addTagsToFile()</code>.</p>
 <h2 id="usage">Usage</h2>
-<p>TODO: Include short and useful examples for package users. Add longer examples
-to <code>/example</code> folder.</p>
-<pre class="language-dart"><code class="language-dart">const like = 'sample';
+<pre class="language-dart"><code class="language-dart">// Get tags from some API, or input them manually
+final tags = {
+  "title": "Snow (Hey Oh)",
+  "artist": "Red Hot Chilli Peppers",
+  "album": "Stadium Arcadium",
+  "genre": "Alternative Rock",
+  "artwork": "https://i.discogs.com/2k0D3eVBULh37nXGG1T6shlOcuxrwCc8tJ7kWpM3was/rs:fit/g:sm/q:90/h:530/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUwMDU3/NzEtMTQyNDc4MzQ3/NS0yNTkyLmpwZWc.jpeg",
+  "year": "2006"
+}
+
+// Add them to the file
+addTagsToFile(TagList.fromMap(tags), 'file.mp3');
 </code></pre>
 <h2 id="additional-information">Additional information</h2>
-<p>TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.</p>
+<p>This package's source code is located in
+<a href="https://github.com/jaq-the-cat/eztags">my github</a>.</p>
+<p>You can contribute any time
+and I will probably notice right away. File issues
+as you see fit, I don't really mind, just don't spam my inbox, ok? :D</p>
 </section>
 
 
