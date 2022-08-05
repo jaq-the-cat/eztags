@@ -1,12 +1,30 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
-import 'package:recase/recase.dart';
 import 'imagedl.dart';
 import 'bytestuff.dart';
 
 const int _headerLength = 10;
 const int _padding = 128;
+
+String _toTitleCase(String s) {
+  final result = StringBuffer();
+  bool lastWasSpace = true;
+  for (int i = 0; i < s.length; i++) {
+    if (s[i] == ' ') {
+      result.write(' ');
+      lastWasSpace = true;
+      continue;
+    }
+    if (lastWasSpace) {
+      result.write(s[i].toUpperCase());
+    } else {
+      result.write(s[i].toLowerCase());
+    }
+    lastWasSpace = false;
+  }
+  return result.toString();
+}
 
 /// Tag type, self explanatory
 enum TagType { title, artist, genre, album, year, artwork, track, duration }
@@ -156,7 +174,7 @@ class Tag {
       case TagType.duration:
         return _textFrame(data);
       case TagType.genre:
-        return _textFrame(ReCase(data).titleCase.toString());
+        return _textFrame(_toTitleCase(data));
       case TagType.artwork:
         return _picFrame(await downloadImage(data));
     }
